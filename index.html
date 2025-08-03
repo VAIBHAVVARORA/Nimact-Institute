@@ -54,16 +54,47 @@
             display: flex;
             list-style: none;
             gap: 2rem;
-            text-align: center;
+            /* text-align: center; */
 
         }
-        .nav-links li {
-  width: 100%;
+
+       /* Hide nav links by default on mobile */
+.nav-links {
+  display: flex;
+  gap: 1rem;
 }
-.nav-links li a {
-  display: block;
-  padding: 0.5rem 0;
+
+.nav-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
 }
+
+/* Mobile view styles */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #fff;
+    position: absolute;
+    top: 60px; /* adjust to your header height */
+    right: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: block;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+}
+
 
 
         .nav-links a {
@@ -334,18 +365,19 @@
     <header>
         <nav class="container">
             <div class="logo">NIMACT</div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a onclick="showSection('home')">Home</a></li>
                 <li><a onclick="showSection('courses')">Courses</a></li>
                 <li><a onclick="showSection('tutors')">Our Tutors</a></li>
                 <li><a onclick="showSection('locations')">Locations</a></li>
                 <li><a onclick="showSection('contact')">Contact</a></li>
             </ul>
-            <div class="mobile-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+<div class="mobile-menu" onclick="toggleMenu()">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
         </nav>
     </header>
 
@@ -664,6 +696,10 @@
     </footer>
 
     <script>
+        function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('show');
+  }
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => {
